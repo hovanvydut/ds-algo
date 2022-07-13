@@ -16,20 +16,22 @@ private:
 	int numSets;
 public:
 	UnionFind (int n) {
-		parent.assign(n, 0);
+		parent.assign(n + 1, 0);
+		rank.assign(n + 1, 0);
 
-		for (int i = 0; i <= n; i++) {
-			parent[i] = 0;
+		for (int i = 1; i <= n; i++) {
+			parent[i] = i;
 			rank[i] = 1;
 		}
 
-		this.numSets = n;
+		numSets = n;
 	}
 
 	int findSet (int i) {
-		if (parent[i] === i)
+		if (parent[i] == i)
 			return i;
-		return parent[i] = findSet(parent[i]);
+		parent[i] = findSet(parent[i]);
+		return parent[i];
 	}
 
 	void unionSet (int i, int j) {
@@ -40,13 +42,12 @@ public:
 				swap(rank[a], rank[b]);
 			}
 			parent[b] = a;
-			
+
 			if (rank[a] == rank[b]) {
 				rank[a] += 1;
 			}
 		}
 	}
-
 };
 
 int main() {
@@ -63,6 +64,6 @@ int main() {
 		UF.unionSet(a, b);
 	}
 
-	
+
 	return 0;
 }

@@ -17,10 +17,10 @@ private:
 	int numSets;
 public:
 	UnionFind (int n) {
-		parent.assign(n+1, 0);
-		rank.assign(n+1, 0);
+		parent.assign(n + 1, 0);
+		rank.assign(n + 1, 0);
 
-		for (int i=1; i<=n; i++) {
+		for (int i = 1; i <= n; i++) {
 			parent[i] = i;
 			rank[i] = 1;
 		}
@@ -43,27 +43,17 @@ public:
 				swap(rank[a], rank[b]);
 			}
 			parent[b] = a;
-			
+
 			if (rank[a] == rank[b]) {
 				rank[a] += 1;
 			}
 		}
 	}
-
-	void toString() {
-		for (int i = 1; i <= numSets; i++) {
-			cout << parent[i] << "\t";
-		}
-		cout << "\n";
-		for (int i = 1; i <= numSets; i++) {
-			cout << i << "\t";
-		}
-	}
 };
 
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
 	int n, a, b;
 	vvi removeList, joinList;
 
@@ -71,7 +61,7 @@ int main() {
 
 	UnionFind UF(n);
 
-	for (int i = 1; i<=n-1; i++) {
+	for (int i = 1; i <= n - 1; i++) {
 		cin >> a >> b;
 		if (UF.findSet(a) == UF.findSet(b)) {
 			removeList.push_back({a, b});
@@ -79,8 +69,8 @@ int main() {
 			UF.unionSet(a, b);
 		}
 	}
-	for (int i=1; i<=n-1; i++) {
-		for (int j=i+1; j<=n; j++) {
+	for (int i = 1; i <= n - 1; i++) {
+		for (int j = i + 1; j <= n; j++) {
 			if (UF.findSet(i) == UF.findSet(j))
 				continue;
 			UF.unionSet(i, j);
@@ -89,9 +79,9 @@ int main() {
 	}
 
 	cout << removeList.size() << "\n";
-	for (int i=0; i<removeList.size(); i++) {
+	for (int i = 0; i < removeList.size(); i++) {
 		cout << removeList[i][0] << " " << removeList[i][1] << " " << joinList[i][0] << " " << joinList[i][1] << "\n";
 	}
-	
+
 	return 0;
 }
