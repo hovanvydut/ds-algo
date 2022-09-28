@@ -18,30 +18,18 @@ const int INF = 1e9;
 const int MAX_SIZE = 1e6+1;
 
 int n;
-int f[MAX_SIZE];
+vector<int> f;
 
 void input() {
     cin >> n;
+    f.resize(n+1, 1e9);
 }
 
 void solve() {
-    if (n <= 9) {
-        cout << 1;
-        return;
-    }
-
+    f[0] = 0;
     for (int i = 0; i <= n; i++) {
-        if (i <= 9) {
-            f[i] = 1;
-        } else {
-            f[i] = INF;
-            int t = i;
-            while (t) {
-                int digit = t % 10;
-                t = t / 10;
-                f[i] = min(f[i], f[i-digit]);
-            }
-            f[i] = f[i] + 1;
+        for (char c : to_string(i)) {
+            f[i] = min(f[i], f[i - (c - '0')] + 1);
         }
     }
 
@@ -102,3 +90,52 @@ int main() {
     return 0;
 }
  */
+
+
+/** DP 1
+#include <bits/stdc++.h>
+using namespace std;
+ 
+const int INF = 1e9;
+const int MAX_SIZE = 1e6+1;
+ 
+int n;
+int f[MAX_SIZE];
+ 
+void input() {
+    cin >> n;
+}
+ 
+void solve() {
+    if (n <= 9) {
+        cout << 1;
+        return;
+    }
+ 
+    for (int i = 0; i <= n; i++) {
+        if (i <= 9) {
+            f[i] = 1;
+        } else {
+            f[i] = INF;
+            int t = i;
+            while (t) {
+                int digit = t % 10;
+                t = t / 10;
+                f[i] = min(f[i], f[i-digit]);
+            }
+            f[i] = f[i] + 1;
+        }
+    }
+ 
+    cout << f[n];
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    
+    input();
+    solve();
+ 
+    return 0;
+}
+*/
